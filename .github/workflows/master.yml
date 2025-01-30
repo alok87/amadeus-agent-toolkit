@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  workflow_dispatch: {}
+  # push:
+  #   branches:
+  #     - master
+  # pull_request:
+  #   branches:
+  #     - master
+
+jobs:
+  python-build:
+    name: Build - Python
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./python
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: make venv
+
+      - name: Build
+        run: |
+          set -x
+          source venv/bin/activate
+          rm -rf build dist *.egg-info
+          make build
+          python -m twine check dist/*
+
+      - name: Test
+        run: |
+          make venv
+          make test
