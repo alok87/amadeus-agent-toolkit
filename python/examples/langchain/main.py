@@ -2,12 +2,13 @@ import os
 
 import streamlit as st
 from dotenv import load_dotenv
-from langchain import hub
+from langchain.agents import AgentType, initialize_agent
+from langchain.memory import ConversationBufferMemory
 from langchain_openai import AzureChatOpenAI
-from langgraph.prebuilt import create_react_agent
 
 from amadeus_agent_toolkit.langchain.toolkit import AmadeusAgentToolkit
 
+# Load environment variables
 load_dotenv()
 
 # Initialize LLM and Amadeus toolkit
@@ -23,50 +24,48 @@ try:
     amadeus_agent_toolkit = AmadeusAgentToolkit(
         client_id=os.getenv("AMADEUS_CLIENT_ID"),
         client_secret=os.getenv("AMADEUS_CLIENT_SECRET"),
-        configuration={
-            "actions": {
-                "flights": {
-                    "search": True,
-                },
-            }
-        },
+        configuration={"actions": {"flights": {"search": True}}},
     )
 
-    tools = []
-    tools.extend(amadeus_agent_toolkit.get_tools())
+    tools = amadeus_agent_toolkit.get_tools()
+    memory = ConversationBufferMemory()
 
-    langgraph_agent_executor = create_react_agent(llm, tools)
-
+    agent = initialize_agent(
+        tools=tools,
+        llm=llm,
+        agent=AgentType.STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION,
+        verbose=True,
+        memory=memory,
+    )
 except Exception as e:
     st.error(f"Error initializing components: {e}")
-    st.stop()  # Stop execution if initialization fails
-
+    st.stop()
 
 # Streamlit app
-st.title("Flight Search Agent")
+st.title("Flight Search Chatbot")
 
-user_input = st.text_area("Enter your flight search query (e.g., Search flight from BLR to GOI on 5th Feb 2025):")
+if "messages" not in st.session_state:
+    st.session_state["messages"] = []
 
-if st.button("Search"):
-    if user_input:
-        input_state = {"messages": user_input}
-        with st.spinner("Searching for flights..."):
-            try:
-                output_state = langgraph_agent_executor.invoke(input_state)
-                # Display results
-                st.write("## Search Results:")
-                st.write(output_state["messages"][-1].content)  # Display the agent's response
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
-                # Enhanced display (optional):  If the response is structured (e.g., JSON), you can parse and display it more nicely.
-                # Example (assuming the agent returns a dictionary or list of dictionaries):
-                # import json
-                # try:
-                #     results = json.loads(output_state["messages"][-1].content)
-                #     st.json(results) # Or display in a table, etc.
-                # except json.JSONDecodeError:
-                #     st.write("Agent's response is not in JSON format. Displaying raw output.")
+user_input = st.chat_input("Ask me about flights...")
 
-            except Exception as e:
-                st.error(f"An error occurred during the search: {e}")
-    else:
-        st.warning("Please enter a flight search query.")
+if user_input:
+    st.session_state.messages.append({"role": "user", "content": user_input})
+    with st.chat_message("user"):
+        st.markdown(user_input)
+
+    with st.spinner("Thinking..."):
+        try:
+            response = agent.run(user_input)
+            st.session_state.messages.append({"role": "assistant", "content": response})
+            with st.chat_message("assistant"):
+                st.markdown(response)
+        except Exception as e:
+            error_message = f"An error occurred: {e}"
+            st.session_state.messages.append({"role": "assistant", "content": error_message})
+            with st.chat_message("assistant"):
+                st.error(error_message)
