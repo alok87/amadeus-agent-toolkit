@@ -10,7 +10,7 @@ import amadeus
 from pydantic import BaseModel
 
 from .configuration import Context
-from .functions import search_flights, search_hotels
+from .functions import search_flights, search_hotels, get_hotels
 
 
 class AmadeusAPI(BaseModel):
@@ -46,6 +46,15 @@ class AmadeusAPI(BaseModel):
         elif method == "search_hotels":
             return json.dumps(
                 search_hotels(
+                    self._context,
+                    self._client,
+                    *args,
+                    **kwargs,
+                )
+            )
+        elif method == "get_hotels":
+            return json.dumps(
+                get_hotels(
                     self._context,
                     self._client,
                     *args,

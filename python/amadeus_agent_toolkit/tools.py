@@ -1,7 +1,9 @@
 from typing import Dict, List
 
-from .prompts import SEARCH_FLIGHTS_PROMPT, SEARCH_HOTELS_PROMPT
-from .schema import SearchHotels, SearchFlights
+from .prompts import SEARCH_FLIGHTS_PROMPT, \
+    SEARCH_HOTELS_PROMPT, GET_HOTELS_PROMPT
+from .schema import SearchHotels, SearchFlights, GetHotels
+
 
 tools: List[Dict] = [
     {
@@ -23,6 +25,17 @@ tools: List[Dict] = [
         "actions": {
             "hotels": {
                 "search": True,
+            }
+        },
+    },
+    {
+        "method": "get_hotels",
+        "name": "Get Hotels",
+        "description": GET_HOTELS_PROMPT,
+        "args_schema": GetHotels,
+        "actions": {
+            "hotels": {
+                "get": True,
             }
         },
     },
