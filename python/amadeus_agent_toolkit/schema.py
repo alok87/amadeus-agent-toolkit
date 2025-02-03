@@ -2,6 +2,15 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
+class SearchHotels(BaseModel):
+    """Schema for `search_hotels` operation."""
+
+    city_code: str = Field(
+        ...,
+        description="Destination city code or airport code. In case of city code , the search will be done around the city center. Available codes can be found in IATA table codes (3 chars IATA Code). Example PAR, BLR",
+    )
+
+
 class SearchFlights(BaseModel):
     """Schema for the `search_flights` operation."""
 

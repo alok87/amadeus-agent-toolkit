@@ -1,3 +1,20 @@
+SEARCH_HOTELS = """
+This tool will search for hotels in a city
+
+It takes the following arguments:
+
+- city_code (str): The IATA code for the city where the hotel needs to be searched. (e.g., BLR)
+
+Example usage:
+
+To find the most relevant hotel based on current context, you would provide the following arguments:
+
+city_code="BLR"
+
+This tool returns the list of hotels with that city code
+"""
+
+
 SEARCH_FLIGHTS_PROMPT = """
 This tool will search for the cheapest flight offers using the Amadeus Flight Offers Search API.
 
