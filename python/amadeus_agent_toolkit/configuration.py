@@ -5,6 +5,7 @@ from typing_extensions import TypedDict
 Object = Literal[
     "searchFlights",
     "searchHotels",
+    "getHotels",
 ]
 
 # Permission type defined

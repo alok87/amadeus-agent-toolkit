@@ -41,12 +41,18 @@ This tool retrieves detailed information about hotels based on a list of hotel I
 
 It takes the following arguments:
 - hotel_ids (list[str]): A list of unique hotel IDs. These IDs are typically obtained from the hotel search results.
+- check_in_date (str): Check-in date of the stay (hotel local date). Format YYYY-MM-DD.
+- check_out_date (str): Check-out date of the stay (hotel local date). Format YYYY-MM-DD.
+- adults (int): Number of adult guests (1-9) per room.
 
 Example usage:
 
 To retrieve details for specific hotels, you would provide the following arguments:
 
-hotel_ids=["12345", "67890"]
+hotel_ids = ["12345", "67890"]
+check_in_date = "2025-03-15"
+check_out_date = "2025-03-20"
+adults = 2
 
 This tool returns information such as hotel offers, available rooms, pricing, offer conditions, and other relevant details.
 """

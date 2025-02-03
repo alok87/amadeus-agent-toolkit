@@ -92,6 +92,9 @@ def get_hotels(
     context: Any,
     client: amadeus.Client,
     hotel_ids: List[str],
+    check_in_date: str,
+    check_out_date: str,
+    adults: int,
 ) -> dict:
     """Retrieve hotel details, including availability,
        rooms, prices, and offer conditions.
@@ -101,6 +104,9 @@ def get_hotels(
                 (not used in the function, but included for compatibility).
         client: The Amadeus API client instance.
         hotel_ids: A list of unique hotel IDs.
+        check_in_date: Check-in date of the stay (hotel local date). Format YYYY-MM-DD.
+        check_out_date: Check-out date of the stay (hotel local date). Format YYYY-MM-DD.
+        adults: Number of adult guests (1-9) per room.
 
     Returns:
         A dictionary containing hotel details such as available rooms,
@@ -109,12 +115,16 @@ def get_hotels(
 
     hotels_get_data: Dict[str, Any] = {
         "hotelIds": hotel_ids,
+        "checkInDate": check_in_date,
+        "checkOutDate": check_out_date,
+        "adults": adults,
+        "roomQuantity": 1,
     }
 
     print(json.dumps(hotels_get_data, indent=4))
 
     try:
-        response = client.reference_data.locations.hotels.by_hotels.get(
+        response = client.shopping.hotel_offers_search.get(
             **hotels_get_data)
         return response.data
     except amadeus.ResponseError as e:

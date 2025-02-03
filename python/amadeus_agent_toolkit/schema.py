@@ -42,3 +42,18 @@ class GetHotels(BaseModel):
         ...,
         description="A list of unique hotel ID, these IDs are returned in SearchHotels usually."
     )
+
+    check_in_date: str = Field(
+        ...,
+        description="Check-in date of the stay (hotel local date). Format YYYY-MM-DD. The lowest accepted value is the present date (no dates in the past). If not present, the default value will be today's date in the GMT",
+    )
+
+    check_out_date: str = Field(
+        ...,
+        description="Check-out date of the stay (hotel local date). Format YYYY-MM-DD. The lowest accepted value is checkInDate+1. If not present, it will default to checkInDate +1.",
+    )
+
+    adults: int = Field(
+        ...,
+        description="Number of adult guests (1-9) per room.",
+    )
