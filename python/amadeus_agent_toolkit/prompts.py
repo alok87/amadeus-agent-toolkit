@@ -19,3 +19,40 @@ adults=2
 
 This tool returns a list of flight offers, sorted by price.  It may raise an error (amadeus.ResponseError) if the request fails.
 """
+
+SEARCH_HOTELS_PROMPT = """
+This tool will search for hotels in a city
+
+It takes the following arguments:
+
+- city_code (str): The IATA code for the city where the hotel needs to be searched. (e.g., BLR)
+
+Example usage:
+
+To find the most relevant hotel based on current context, you would provide the following arguments:
+
+city_code="BLR"
+
+This tool returns the list of hotels with that city code
+"""
+
+GET_HOTELS_PROMPT = """
+This tool retrieves detailed information about hotels based on a list of hotel IDs.
+
+It takes the following arguments:
+- hotel_ids (list[str]): A list of unique hotel IDs. These IDs are typically obtained from the hotel search results.
+- check_in_date (str): Check-in date of the stay (hotel local date). Format YYYY-MM-DD.
+- check_out_date (str): Check-out date of the stay (hotel local date). Format YYYY-MM-DD.
+- adults (int): Number of adult guests (1-9) per room.
+
+Example usage:
+
+To retrieve details for specific hotels, you would provide the following arguments:
+
+hotel_ids = ["12345", "67890"]
+check_in_date = "2025-03-15"
+check_out_date = "2025-03-20"
+adults = 2
+
+This tool returns information such as hotel offers, available rooms, pricing, offer conditions, and other relevant details.
+"""
