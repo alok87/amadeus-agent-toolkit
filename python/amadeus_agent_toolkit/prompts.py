@@ -16,8 +16,9 @@ origin_location_Code="MAD"
 destination_location_code="BOS"
 departure_date="2024-03-15"
 adults=2
+max=10
 
-This tool returns a list of flight offers, sorted by price.  It may raise an error (amadeus.ResponseError) if the request fails.
+This tool returns a list of flight offers, sorted by price. It may raise an error (amadeus.ResponseError) if the request fails.
 """
 
 SEARCH_HOTELS_PROMPT = """

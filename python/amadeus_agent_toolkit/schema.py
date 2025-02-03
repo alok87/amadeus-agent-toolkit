@@ -20,9 +20,14 @@ class SearchFlights(BaseModel):
         description="the date on which to fly out, in YYYY-MM-DD format",
     )
 
-    adults: str = Field(
+    adults: int = Field(
         ...,
         description="the number of adult passengers with age 12 or older",
+    )
+
+    max: int = Field(
+        ...,
+        description="maximum number of flight offers to return.",
     )
 
 

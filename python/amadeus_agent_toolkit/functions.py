@@ -11,6 +11,7 @@ def search_flights(
     destination_location_code: str,
     departure_date: str,
     adults: int,
+    max: int = 10,
 ) -> dict:
     """Searches for the cheapest flights between two locations on a given date.
 
@@ -19,6 +20,7 @@ def search_flights(
         destination_location_code: IATA code of the destination city/airport (e.g., "BOS").
         departure_date: The date of departure in YYYY-MM-DD format.
         adults: The number of adult passengers.
+        max: maximum number of flight offers to return. If specified, the value should be greater than or equal to 1
 
     Returns:
         A dictionary containing the flight offers or an error dictionary.
@@ -29,6 +31,7 @@ def search_flights(
         "destinationLocationCode": destination_location_code,
         "departureDate": departure_date,
         "adults": adults,
+        "max": max,
     }
 
     print(json.dumps(flight_search_data, indent=4))
