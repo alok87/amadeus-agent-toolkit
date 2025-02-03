@@ -20,7 +20,7 @@ adults=2
 This tool returns a list of flight offers, sorted by price.  It may raise an error (amadeus.ResponseError) if the request fails.
 """
 
-SEARCH_HOTELS = """
+SEARCH_HOTELS_PROMPT = """
 This tool will search for hotels in a city
 
 It takes the following arguments:
@@ -36,7 +36,7 @@ city_code="BLR"
 This tool returns the list of hotels with that city code
 """
 
-GET_HOTELS = """
+GET_HOTELS_PROMPT = """
 This tool retrieves detailed information about hotels based on a list of hotel IDs.
 
 It takes the following arguments:
