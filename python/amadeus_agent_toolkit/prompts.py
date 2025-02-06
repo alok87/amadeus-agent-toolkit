@@ -1,22 +1,18 @@
 SEARCH_FLIGHTS_PROMPT = """
-This tool will search for the cheapest flight offers using the Amadeus Flight Offers Search API.
+This tool searches for the cheapest flights using Amadeus Flight Offers Search API.
 
-It takes the following arguments:
+Arguments:
+- origin_location_code: IATA code of departure city (e.g., "MAD")
+- destination_location_code: IATA code of arrival city (e.g., "BOS")
+- departure_date: Date in YYYY-MM-DD format
+- adults: Number of adult passengers (12+ years)
+- return_date (optional): Return date in YYYY-MM-DD format
+- children (optional): Number of children (2-11 years)
+- non_stop (optional): If true, only non-stop flights
+- currency_code (optional): Currency for prices (default: "INR")
+- max (optional): Max flight offers to return (default: 10)
 
-- origin_location_code (str): The IATA code of the departure city/airport (e.g., "MAD" for Madrid).
-- destination_location_code (str): The IATA code of the arrival city/airport (e.g., "BOS" for Boston).
-- departure_date (str): The departure date in YYYY-MM-DD format (e.g., "2024-03-15").
-- adults (int): The number of adult passengers (12 years or older).
-- return_date (str, optional): The return date in YYYY-MM-DD format for round trips.
-- children (int, optional): The number of children passengers (2-11 years).
-- non_stop (bool, optional): If true, return only non-stop flights.
-- currency_code (str, optional): The preferred currency for flight offers (default: "INR").
-- max (int, optional): Maximum number of flight offers to return (default: 10).
-
-Example usage:
-
-To find the cheapest round-trip flights from Madrid (MAD) to Boston (BOS) on March 15, 2024, returning March 22, 2024, for 2 adults and 1 child, with non-stop flights only:
-
+Example:
 origin_location_code="MAD"
 destination_location_code="BOS"
 departure_date="2024-03-15"
@@ -24,10 +20,8 @@ return_date="2024-03-22"
 adults=2
 children=1
 non_stop=true
-currency_code="INR"
-max=10
 
-This tool returns a list of flight offers, sorted by price. It may raise an error (amadeus.ResponseError) if the request fails.
+Returns flight offers sorted by price. May raise amadeus.ResponseError on failure.
 """
 
 SEARCH_HOTELS_PROMPT = """
