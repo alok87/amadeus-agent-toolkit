@@ -1,11 +1,11 @@
-from typing import Dict, List
+from typing import Dict, List, Any
 
 from .prompts import SEARCH_FLIGHTS_PROMPT, \
     SEARCH_HOTELS_PROMPT, GET_HOTELS_PROMPT
 from .schema import SearchHotels, SearchFlights, GetHotels
 
 
-tools: List[Dict] = [
+tools: List[Dict[str, Any]] = [
     {
         "method": "search_flights",
         "name": "Search Flights",

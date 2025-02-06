@@ -36,7 +36,25 @@ class SearchHotels(BaseModel):
 
     city_code: str = Field(
         ...,
-        description="Destination city code or airport code. In case of city code , the search will be done around the city center. Available codes can be found in IATA table codes (3 chars IATA Code). Example PAR, BLR",
+        description="Destination city code or airport code. In case of city code, the search will be done around the city center. Available codes can be found in IATA table codes (3 chars IATA Code). Example PAR, BLR",
+    )
+
+    ratings: Optional[int] = Field(
+        None,
+        description="Filter hotels by their rating. Allowed values are 1-5, where 5 represents top rated hotels.",
+        ge=1,
+        le=5,
+    )
+
+    radius: Optional[int] = Field(
+        None,
+        description="The radius within which to search for hotels from the city center.",
+        gt=0,
+    )
+
+    radiusUnit: Optional[str] = Field(
+        None,
+        description="The unit of measurement for the radius (e.g., 'KM').",
     )
 
 

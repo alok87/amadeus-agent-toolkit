@@ -27,14 +27,20 @@ This tool will search for hotels in a city
 It takes the following arguments:
 
 - city_code (str): The IATA code for the city where the hotel needs to be searched. (e.g., BLR)
+- ratings (int, optional): Filter hotels by their rating. Allowed values are 1-5, where 5 represents top rated hotels.
+- radius (int, optional): The radius within which to search for hotels from the city center.
+- radiusUnit (str, optional): The unit of measurement for the radius (e.g., "KM").
 
 Example usage:
 
-To find the most relevant hotel based on current context, you would provide the following arguments:
+To find hotels in Bangalore with a 5-star rating within 10 KM of the city center:
 
 city_code="BLR"
+ratings=5
+radius=10
+radiusUnit="KM"
 
-This tool returns the list of hotels with that city code
+This tool returns the list of hotels matching the specified criteria
 """
 
 GET_HOTELS_PROMPT = """

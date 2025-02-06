@@ -57,11 +57,18 @@ def search_hotels(
     context: Context,
     client: amadeus.Client,
     city_code: str,
-) -> dict:
+    ratings: Optional[int] = None,
+    radius: Optional[int] = None,
+    radiusUnit: Optional[str] = None,
+) -> Dict[str, Any]:
     """Searches for the hotels between given a city code.
 
     Parameters:
-        city_code: IATA code of the departure city/airport (e.g., "MAD").
+        city_code: IATA code of the departure city/airport (e.g., "MAD")
+        ratings: The ratings of the hotels (e.g., 5). Allowed values are 1, 2, 3, 4, 5.
+                 5 is for top rated hotels.
+        radius: The radius of the search (e.g., 100)
+        radiusUnit: The unit of the radius (e.g., "KM")
 
     Returns:
         A list containing hotels or an error dictionary.
@@ -70,6 +77,13 @@ def search_hotels(
     hotels_search_data: Dict[str, Any] = {
         "cityCode": city_code,
     }
+
+    if ratings is not None:
+        hotels_search_data["ratings"] = ratings
+    if radius is not None:
+        hotels_search_data["radius"] = radius
+    if radiusUnit is not None:
+        hotels_search_data["radiusUnit"] = radiusUnit
 
     print(json.dumps(hotels_search_data, indent=4))
 
