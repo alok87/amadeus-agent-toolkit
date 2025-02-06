@@ -20,9 +20,30 @@ class SearchFlights(BaseModel):
         description="the date on which to fly out, in YYYY-MM-DD format",
     )
 
+    return_date: Optional[str] = Field(
+        None,
+        description="the date on which to return, in YYYY-MM-DD format",
+    )
+
     adults: int = Field(
         ...,
         description="the number of adult passengers with age 12 or older",
+    )
+
+    children: Optional[int] = Field(
+        None,
+        description="the number of children (2-11 years)",
+        ge=0,
+    )
+
+    non_stop: Optional[bool] = Field(
+        None,
+        description="if true, return only non stop flights",
+    )
+
+    currency_code: Optional[str] = Field(
+        "INR",
+        description="the preferred currency for the flight offers (e.g., 'INR')",
     )
 
     max: int = Field(

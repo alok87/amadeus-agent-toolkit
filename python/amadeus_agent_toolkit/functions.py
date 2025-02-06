@@ -12,7 +12,11 @@ def search_flights(
     departure_date: str,
     adults: int,
     max: int = 10,
-) -> dict:
+    return_date: Optional[str] = None,
+    children: Optional[int] = None,
+    non_stop: Optional[bool] = None,
+    currency_code: str = "INR",
+) -> Dict[str, Any]:
     """Searches for the cheapest flights between two locations on a given date.
 
     Parameters:
@@ -21,6 +25,10 @@ def search_flights(
         departure_date: The date of departure in YYYY-MM-DD format.
         adults: The number of adult passengers.
         max: maximum number of flight offers to return. If specified, the value should be greater than or equal to 1
+        return_date: Optional return date in YYYY-MM-DD format for round trips.
+        children: Optional number of children (2-11 years).
+        non_stop: Optional boolean to filter for non-stop flights only.
+        currency_code: The preferred currency for flight offers (default: "INR").
 
     Returns:
         A dictionary containing the flight offers or an error dictionary.
@@ -32,7 +40,15 @@ def search_flights(
         "departureDate": departure_date,
         "adults": adults,
         "max": max,
+        "currencyCode": currency_code,
     }
+
+    if return_date is not None:
+        flight_search_data["returnDate"] = return_date
+    if children is not None:
+        flight_search_data["children"] = children
+    if non_stop is not None:
+        flight_search_data["nonStop"] = non_stop
 
     print(json.dumps(flight_search_data, indent=4))
 
